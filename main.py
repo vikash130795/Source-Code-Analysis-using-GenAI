@@ -1,3 +1,7 @@
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 from langchain.vectorstores import Chroma
 from src.helper import load_embedding
 from dotenv import load_dotenv
@@ -17,13 +21,21 @@ load_dotenv()
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
+# def create_and_get_folder_path(folder_name):
+#   current_directory = os.getcwd()
+#   new_folder_path = os.path.join(current_directory, folder_name)
+#   os.makedirs(new_folder_path, exist_ok=True)
+#   return new_folder_path
+
 
 embeddings = load_embedding()
-persist_directory = "db"
-# Now we can load the persisted database from disk, and use it as normal.
-vectordb = Chroma(persist_directory=persist_directory,
-                  embedding_function=embeddings)
+#persist_directory_name = "db"
 
+# persist_directory = create_and_get_folder_path(persist_directory_name) 
+# print(persist_directory)
+# Now we can load the persisted database from disk, and use it as normal.
+vectordb = Chroma(persist_directory="/tmp/.chroma", embedding_function=embeddings)
+#vectordb = Chroma(persist_directory= persist_directory, embedding_function=embeddings)
 
 
 llm = ChatOpenAI()

@@ -6,18 +6,31 @@ from langchain.text_splitter import Language
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
 
+# def create_and_get_folder_path(folder_name):
+#   current_directory = os.getcwd()
+#   global new_folder_path
+#   new_folder_path = os.path.join(current_directory, folder_name)
+#   os.makedirs(new_folder_path, exist_ok=True)
+#   return new_folder_path
+
+# global repo_folder_path
 
 #clone any github repositories 
 def repo_ingestion(repo_url):
     os.makedirs("repo", exist_ok=True)
+    # global repo_folder_path
+    # repo_folder_path = create_and_get_folder_path("repo")
+    # #print(repo_folder_path) 
     repo_path = "repo/"
     Repo.clone_from(repo_url, to_path=repo_path)
 
 
 
-
 #Loading repositories as documents
 def load_repo(repo_path):
+    # dir = os.path.abspath(os.getcwd())
+    # path_dir = dir + "/repo"
+    # print(path_dir)
     loader = GenericLoader.from_filesystem(repo_path,
                                         glob = "**/*",
                                        suffixes=[".py"],
